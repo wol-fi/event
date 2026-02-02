@@ -1,6 +1,4 @@
-make_cf_y <- function(T, par_y=list()) {
-  par_y <- default_y(par_y)
-  
+make_cf_y <- function(T, par_y) {
   p0 <- par_y$p0
   sigma_p <- par_y$sigma_p
   tau <- par_y$tau
@@ -67,16 +65,5 @@ make_cf_y <- function(T, par_y=list()) {
   }
 }
 
-cf_y <- function(u, T, par_y=list()) make_cf_y(T, par_y)(u)
+cf_y <- function(u, T, par_y) make_cf_y(T, par_y)(u)
 
-# -------------------------------------------------------------------------
-
-get_Y0 <- function(par_y=list()) {
-  par_y <- default_Y(par_y)
-  t0 <- par_y$tau
-  Re(make_cf_y(t0, par_y)(-1i))
-}
-
-get_S0 <- function(T, par_y=list(), par_x=list()) {
-  par_x$S0x * get_Y0(T, par_y)
-}

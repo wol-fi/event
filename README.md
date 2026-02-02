@@ -8,11 +8,22 @@
 
 ## Example
 ``` r
-K <- 80:120
-C <- cos_price(K, type="call")
-plot(K, C)
+library(event)
 
-Y0 <- get_Y0()
-S0 <- get_S0()
+par_x <- default_x()
+par_y <- default_y(par=list(tau=7/365))
+
+Y0 <- get_Y0(par_y)
+S0 <- get_S0(par_x, par_y)
+
+K <- 80:120
+C1 <- cos_price(K, T=6/365, par_x, par_y, type="call", N = 2^10, L=6, h=1e-2)
+C2 <- cos_price(K, T=8/365, par_x, par_y, type="call")
+
+plot(K, C1, type="l"); 
+lines(K, C2, col=4)
+
+plot(K, splinefun(K, C1)(K,2), type="l")
+lines(K, splinefun(K, C2)(K,2), type="l", main="post-event", col=4)
 
 ```

@@ -1,3 +1,4 @@
 import(stats)
 import(utils)
-export(cos_price, get_Y0, get_S0, cf_x, cf_y, default_y, default_x)
+export(cos_price, get_Y0, get_S0, cf_x, cf_y)
+export(default_y, default_x, default_x_heston, default_x_bates, default_x_BS)

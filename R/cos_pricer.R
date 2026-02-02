@@ -1,8 +1,6 @@
-cos_price <- function(K, T=0.9, r=0, div=0, par_x=list(), par_y=list(),
+cos_price <- function(K, T=0.9, par_x, par_y, r=0, div=0,
                       type=c("call","put"), N=1024, L=10, h=1e-4) {
   type <- match.arg(type)
-  par_x <- default_x(par_x)
-  par_y <- default_y(par_y)
   
   cfx <- make_cf_x(T, r, div, par_x)
   cfy <- make_cf_y(T, par_y)
