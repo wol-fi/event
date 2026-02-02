@@ -1,6 +1,8 @@
-cos_price0 <- function(cf_lnS, K, par, type = c("call", "put")) {
+cos_price <- function(K, par, type = c("call", "put")) {
   type <- match.arg(type)
   
+  cf_lnS <- function(u, par) cf_x(u, par) * cf_y(u, par)
+    
   cumulants <- function(cf, h = 1e-4) {
     lp <- function(u) log(cf(u))
     l0 <- lp(0)
@@ -49,9 +51,3 @@ cos_price0 <- function(cf_lnS, K, par, type = c("call", "put")) {
   
   sapply(K, oneK)
 }
-
-cos_price <- function(cf_up, K, par, type) {
-  cf_u <- function(u) cf_up(u, par)
-  cos_price0(cf_u, K, par, type)
-}
-

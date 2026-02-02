@@ -1,4 +1,4 @@
-cf_x_bates <- function(u, par) {
+cf_x <- function(u, par) {
   i <- 1i
   kbar <- exp(par$muJ + 0.5 * par$sigJ^2) - 1
   a <- par$kappa * par$theta

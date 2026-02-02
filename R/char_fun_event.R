@@ -1,4 +1,4 @@
-cf_y_p_beta <- function(u, par) {
+cf_y <- function(u, par) {
   p0 <- par$p0
   vp <- par$p_var
   if (p0 <= 0 || p0 >= 1) stop("p0 must be in (0,1)")
