@@ -3,8 +3,8 @@ cos_price <- function(K, par, type = c("call", "put")) {
   
   cf_lnS <- function(u, par) cf_x(u, par) * cf_y(u, par)
     
-  cumulants <- function(cf, h = 1e-4) {
-    lp <- function(u) log(cf(u))
+  cumulants <- function(cf, par, h = 1e-4) {
+    lp <- function(u) log(cf(u, par))
     l0 <- lp(0)
     l1p <- lp(h); l1m <- lp(-h)
     l2p <- lp(2 * h); l2m <- lp(-2 * h)
@@ -32,7 +32,7 @@ cos_price <- function(K, par, type = c("call", "put")) {
   vk_put  <- function(k, a, b) 2 / (b - a) * (psi_term(k, a, 0, a, b) - chi_term(k, a, 0, a, b))
   
   oneK <- function(Ki) {
-    cs <- cumulants(cf_lnS)
+    cs <- cumulants(cf_lnS, par)
     c1x <- cs["c1"] - log(Ki)
     w <- sqrt(cs["c2"] + sqrt(pmax(cs["c4"], 0)))
     a <- c1x - par$L * w
@@ -42,7 +42,7 @@ cos_price <- function(K, par, type = c("call", "put")) {
     
     k <- 0:(par$N - 1)
     u <- k * pi / (b - a)
-    cfv <- cf_lnS(u)
+    cfv <- cf_lnS(u, par)
     fk <- Re(exp(-1i * u * log(Ki)) * cfv * exp(-1i * u * a))
     fk[1] <- 0.5 * fk[1]
     vk <- if (type == "call") vapply(k, function(kk) vk_call(kk, a, b), numeric(1)) else vapply(k, function(kk) vk_put(kk, a, b), numeric(1))
