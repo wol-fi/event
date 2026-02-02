@@ -1,2 +1,2 @@
 import(stats)
-export(cos_price)
+export(cos_price, get_Y0, get_S0, cf_x, cf_y, default_y, default_x)

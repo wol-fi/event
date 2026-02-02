@@ -1,13 +1,37 @@
 
 
-# test put call parity ----------------------------------------------------
+# test: put call parity ----------------------------------------------------
 
 library(event)
+rm(list=ls())
 
-p0 <- 0.4
-p_var <- 0.6 * p0*(1-p0) 
-par1 <- list(T=1,S0x=100,r=0,div=0,kappa=1.5,theta=0.04,sigma=0.4,rho=-0.7,v0=0.04,lambda=0.2,muJ=-0.05,sigJ=0.15,
-             p0=p0, p_var=p_var,gamma=5,mh=log(1.10),sh=0.10,ml=log(0.90),sl=0.10,N=1024,L=10,n_quad=64)
+# Default: 
+# - Bates model for X, see "default_x()"
+# - Beta-Dist for p_T, log-normal Y_j, see "default_y()"
 
 K <- 80:120
-C <- cos_price(K, par1, "call")
+C <- cos_price(K, type="call")
+P <- cos_price(K, type="put")
+
+Y0 <- get_Y0()
+S0 <- get_S0()
+
+res <- data.frame(K=K, call=C, put=P, parity_err=(C-P)-(S0-K))
+plot(K, res$parity_err)
+
+
+
+# test: different p_var ---------------------------------------------------
+
+library(event)
+rm(list=ls())
+
+par_y1 <- par_y2 <- default_y()
+par_y2$p_var <- 0.001
+
+K <- 80:120
+C1 <- cos_price(K, par_y=par_y1, type="call")
+C2 <- cos_price(K, par_y=par_y2, type="call")
+
+plot(K, C1, type="l"); grid()
+lines(K, C2, col=4)
