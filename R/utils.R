@@ -1,15 +1,14 @@
 default_y <- function(par=list()) {
   d <- list(
     p0=0.4,
-    p_var=NA_real_,
+    sigma_p=0.2,
+    tau=1,
     gamma=5,
-    mh=log(1.10), sh=0.10,
-    ml=log(0.90), sl=0.10,
+    mh=log(1.10), sh=0.02,
+    ml=log(0.90), sl=0.02,
     n_quad=64
   )
-  par <- modifyList(d, par)
-  if (!is.finite(par$p_var)) par$p_var <- 0.6 * par$p0 * (1 - par$p0)
-  par
+  modifyList(d, par)
 }
 
 default_x <- function(par=list()) {

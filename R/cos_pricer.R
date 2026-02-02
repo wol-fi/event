@@ -1,10 +1,12 @@
-cos_price <- function(K, T=1, r=0, div=0, par_x=list(), par_y=list(),
-                      type=c("call","put"), N=1024, L=10) {
+cos_price <- function(K, T=0.9, r=0, div=0, par_x=list(), par_y=list(),
+                      type=c("call","put"), N=1024, L=10, h=1e-4) {
   type <- match.arg(type)
-  if(length(par_x)==0) par_x <- default_x()
-  if(length(par_y)==0) par_y <- default_y()
+  par_x <- default_x(par_x)
+  par_y <- default_y(par_y)
   
-  cf_lnS <- function(u) cf_x(u, T, r, div, par_x) * cf_y(u, par_y)
+  cfx <- make_cf_x(T, r, div, par_x)
+  cfy <- make_cf_y(T, par_y)
+  cf_lnS <- function(u) cfx(u) * cfy(u)
   
   cumulants <- function(cf, h=1e-4) {
     lp <- function(u) log(cf(u))
