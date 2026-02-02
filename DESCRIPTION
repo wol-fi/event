@@ -1,0 +1,10 @@
+Package: event
+Type: Package
+Title: Pricing Event Risk
+Version: 0.1.1
+Author: Wolfgang Schadner
+Maintainer: Wolfgang Schadner <wolfgang.schadner@uni.li>
+Description: A package for pricing event risk.
+License: CC0
+Encoding: UTF-8
+LazyData: true
