@@ -120,3 +120,4 @@ opt_price <- function(K, T=0.9, par_x, par_y, r=0, div=0,
 }
 
 
+bs_price <- function(x, v) pnorm(-x/v+v/2)-exp(x)*pnorm(-x/v-v/2)
