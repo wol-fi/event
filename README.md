@@ -29,3 +29,5 @@ lines(K, splinefun(K, C2)(K,2), type="l", col=4)
 legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="n")
 
 ```
+<img width="800" height="400" alt="rnd" src="https://github.com/user-attachments/assets/7281b14b-967e-4800-bfe3-eb10ced42000" />
+<img width="800" height="400" alt="call" src="https://github.com/user-attachments/assets/ab2f8dbf-44a0-4d04-b214-5830bf7dbf10" />
