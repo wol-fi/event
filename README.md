@@ -10,8 +10,8 @@
 ``` r
 library(event)
 
-par_x <- default_x() # default for market risk is Bates model (stochastic vola + Merton jumps)
-par_y <- default_y(par=list(tau=7/365)) # default for event risk is mix-of-2-log-normals with stochastic p_t (Beta-distributed)
+par_x <- default_x() # Bates model (stochastic vola + Merton jumps)
+par_y <- default_y(par=list(tau=7/365)) # Mix log-normals with stochastic p_t (Beta-distributed)
 
 Y0 <- get_Y0(par_y)
 S0 <- get_S0(par_x, par_y)
