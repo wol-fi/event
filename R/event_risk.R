@@ -57,7 +57,13 @@ make_cf_y <- function(T, par_y) {
   mu_h <- exp(mh + 0.5 * (1 - 2 * gamma) * sh^2)
   mu_l <- exp(ml + 0.5 * (1 - 2 * gamma) * sl^2)
   xk <- mu_l + (mu_h - mu_l) * qk
-  lxk <- log(xk)
+  # lxk <- log(xk)
+  
+  q0 <- p0 / (p0 + (1 - p0) * c)
+  target <- mu_l + (mu_h - mu_l) * q0
+  current <- sum(wk2 * xk) / denom
+  scl <- target / current
+  lxk <- log(scl * xk)
   
   function(u) {
     if (length(u) == 1) sum(wk2 * exp(1i * u * lxk)) / denom else
