@@ -7,13 +7,16 @@
 ```
 
 ## Example
-- pricing European call option with expiry before- and after event
+- Pricing European call options with expiry before- and after event
+- Market risk (X): Bates model (stochastic vol + Merton jumps)
+- Event risk (Y): stochastic p_t (Beta dist.) + mix of log-normals
+- check parameters (par_x, par_y) for details
 
 ``` r
 library(event)
 
-par_x <- default_x() # Bates model (stochastic vola + Merton jumps)
-par_y <- default_y(par=list(tau=7/365)) # Mix log-normals with stochastic p_t (Beta-distributed)
+par_x <- default_x()
+par_y <- default_y(par=list(tau=7/365))
 
 Y0 <- get_Y0(par_y)
 S0 <- get_S0(par_x, par_y)
