@@ -40,5 +40,6 @@ plot(log(K/S0), iv1, type="l", ylim=range(c(iv1, iv2)), ylab="iv", main="implied
 lines(log(K/S0), iv2, col=4)
 legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="n")
 ```
-<img width="800" height="400" alt="iv" src="https://github.com/user-attachments/assets/3e97f61e-6d94-4cc2-9594-c938d28bef76" />
+<img width="800" height="400" alt="iv" src="https://github.com/user-attachments/assets/c65797e4-d447-42d4-9fa3-f933a54c4f00" />
+
 
