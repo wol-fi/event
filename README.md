@@ -33,3 +33,12 @@ legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="
 ```
 <img width="800" height="400" alt="rnd" src="https://github.com/user-attachments/assets/7281b14b-967e-4800-bfe3-eb10ced42000" />
 
+``` r
+iv1 <- ivol(K, C1, S0, 6/365, type="call")
+iv2 <- ivol(K, C2, S0, 8/365, type="call")
+plot(log(K/S0), iv1, type="l", ylim=range(c(iv1, iv2)), ylab="iv", main="implied vola")
+lines(log(K/S0), iv2, col=4)
+legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="n")
+```
+<img width="800" height="400" alt="iv" src="https://github.com/user-attachments/assets/3e97f61e-6d94-4cc2-9594-c938d28bef76" />
+
