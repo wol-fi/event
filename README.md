@@ -7,6 +7,8 @@
 ```
 
 ## Example
+- pricing European call option with expiry before- and after event
+
 ``` r
 library(event)
 
