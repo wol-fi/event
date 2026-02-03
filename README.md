@@ -22,8 +22,10 @@ C2 <- cos_price(K, T=8/365, par_x, par_y, type="call") # option price via COS-me
 
 plot(K, C1, type="l", main="Call price") 
 lines(K, C2, col=4)
+legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="n")
 
 plot(K, splinefun(K, C1)(K,2), type="l", ylab="RND", main="RND")
 lines(K, splinefun(K, C2)(K,2), type="l", col=4)
+legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="n")
 
 ```
