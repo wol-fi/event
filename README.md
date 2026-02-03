@@ -6,9 +6,9 @@
     devtools::install_github("wol-fi/event")
 ```
 
-## Example
+## Examples
 
-### Pricing European Call: pre- and post-event expiry
+### A) Pricing European Call: pre- and post-event expiry
 - Market risk `X`: Bates model (stochastic vol + Merton jumps)
 - Event risk `Y`: stochastic p_t (Beta dist.) + mix of log-normals
 - check parameters (`par_x`, `par_y`) for details
@@ -48,7 +48,7 @@ legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="
 ```
 <img width="800" height="400" alt="iv" src="https://github.com/user-attachments/assets/c65797e4-d447-42d4-9fa3-f933a54c4f00" />
 
-### Simulation of Event-Risk Multiplier
+### B) Simulation of Event-Risk Multiplier
 ``` r
 library(event)
 
