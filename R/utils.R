@@ -19,7 +19,7 @@ default_y <- function(par=list()) {
   d <- list(
     p0=0.4,
     sigma_p=0.2,
-    tau=1,
+    tau=7/365,
     gamma=5,
     mh=log(1.10), sh=0.02,
     ml=log(0.90), sl=0.02,

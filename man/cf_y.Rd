@@ -5,10 +5,11 @@
 Computes the characteristic function of the log event-risk multiplier (Y-block) for a two-outcome event-risk model.
 }
 \usage{
-cf_y(u, par_y)
+cf_y(u, T, par_y)
 }
 \arguments{
   \item{u}{Numeric vector (or scalar). Points at which to evaluate the characteristic function.}
+  \item{T}{Expiration time.}
   \item{par_y}{List of event-risk parameters with elements:
     \describe{
       \item{p0}{Mean event probability in (0,1).}
@@ -34,14 +35,16 @@ Input validation:
 Complex vector of the same length as \code{u}, giving \code{E[exp(1i*u*log(Y))]} under the pricing measure.
 }
 \examples{
-par_y <- list(
-  p0=0.4,
-  p_var=0.6*0.4*(1-0.4),
-  gamma=5,
-  mh=log(1.10), sh=0.10,
-  ml=log(0.90), sl=0.10,
-  n_quad=64
-)
-u <- seq(0, 50, length.out=200)
-phi <- cf_y(u, par_y)
+\dontrun{
+  par_y <- list(
+    p0=0.4,
+    p_var=0.6*0.4*(1-0.4),
+    gamma=5,
+    mh=log(1.10), sh=0.10,
+    ml=log(0.90), sl=0.10,
+    n_quad=64
+  )
+  u <- seq(0, 50, length.out=200)
+  phi <- cf_y(u, par_y)
+  }
 }

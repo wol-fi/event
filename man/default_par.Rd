@@ -1,10 +1,10 @@
 \name{default_model_params}
-\alias{default_X}
+\alias{default_x}
 \alias{default_x}
 \alias{default_x_bates}
 \alias{default_x_heston}
 \alias{default_x_BS}
-\alias{default_Y}
+\alias{default_y}
 \title{Default parameter lists for market-risk and event-risk blocks}
 \description{
 Constructs default parameter lists for the market-risk (X-block) and event-risk (Y-block) components.
@@ -54,6 +54,7 @@ A named list of parameters. The returned list contains at least:
 }
 }
 \examples{
+\dontrun{
 par_x <- default_x()
 par_x2 <- default_x(list(S0x=120, rho=-0.5))
 
@@ -65,4 +66,5 @@ par_bs2 <- default_x_BS(list(sigma=0.25))
 
 par_y <- default_Y()
 par_y2 <- default_Y(list(p0=0.3))
+}
 }

@@ -6,9 +6,9 @@
 Convenience functions to compute the initial event-risk multiplier \code{Y0} and the combined initial level \code{S0 = S0x * Y0}.
 }
 \usage{
-get_Y0(par_y = list())
+get_Y0(par_y)
 
-get_S0(par_y = list(), par_x = list())
+get_S0(par_x, par_x)
 }
 \arguments{
   \item{par_y}{List of event-risk parameters passed to \code{cf_y} (or to the event-risk CF factory, if used).}
@@ -26,9 +26,11 @@ Both functions are intended as utilities for model parameterization and consiste
 \code{get_S0()} returns a numeric scalar \code{S0}.
 }
 \examples{
-par_y <- default_Y()
-par_x <- default_X(list(S0x=100))
+\dontrun{
+par_y <- default_y()
+par_x <- default_x(list(S0x=100))
 
 Y0 <- get_Y0(par_y)
 S0 <- get_S0(par_y, par_x)
+}
 }

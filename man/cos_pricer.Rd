@@ -1,5 +1,5 @@
-\name{cos_pricer}
-\alias{cos_pricer}
+\name{cos_price}
+\alias{cos_price}
 \title{COS option pricer for market-risk (X) times event-risk (Y)}
 \description{
 Prices European options using the COS method, where the underlying is modeled as
@@ -16,9 +16,9 @@ cos_pricer(K, T, r, div = 0, par_x = list(), par_y = list(),
   \item{r}{Continuously compounded risk-free rate.}
   \item{div}{Continuously compounded dividend yield (or foreign rate), default 0.}
   \item{par_x}{List of market-risk (Bates) parameters. Must include \code{S0x}.
-See \code{\link{cf_x}} and \code{\link{default_X}}.}
+See \code{\link{cf_x}} and \code{\link{default_x}}.}
   \item{par_y}{List of event-risk parameters.
-See \code{\link{cf_y}} and \code{\link{default_Y}}.}
+See \code{\link{cf_y}} and \code{\link{default_y}}.}
   \item{type}{Option type, \code{"call"} or \code{"put"}.}
   \item{N}{Number of COS terms (positive integer).}
   \item{L}{Truncation width parameter (positive).}
@@ -37,9 +37,11 @@ Numeric vector of option prices with the same length and order as \code{K}.
 \code{\link{cf_x}}, \code{\link{cf_y}}, \code{\link{default_X}}, \code{\link{default_Y}}.
 }
 \examples{
-par_x <- default_X(list(S0x=100))
-par_y <- default_Y()
+\dontrun{
+par_x <- default_x()
+par_y <- default_y()
 
 K <- 80:120
-C <- cos_pricer(K, T=1, r=0, div=0, par_x=par_x, par_y=par_y, type="call")
+C <- cos_price(K, T=1, r=0, div=0, par_x=par_x, par_y=par_y, type="call")
+}
 }

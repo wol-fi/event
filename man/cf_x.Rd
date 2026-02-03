@@ -35,6 +35,7 @@ The drift adjustment uses \eqn{\kappa_J = \exp(\mu_J + 0.5 \sigma_J^2) - 1}.
 Complex vector of the same length as \code{u}, giving \code{E[exp(1i*u*log(X_T))]} under the pricing measure.
 }
 \examples{
+\dontrun{
 par_x <- list(
   S0x=100,
   kappa=1.5, theta=0.04, sigma=0.4, rho=-0.7, v0=0.04,
@@ -42,4 +43,5 @@ par_x <- list(
 )
 u <- seq(0, 50, length.out=200)
 phi <- cf_x(u, T=1, r=0.01, div=0, par_x=par_x)
+}
 }

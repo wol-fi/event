@@ -1,4 +1,5 @@
 import(stats)
 import(utils)
-export(cos_price, get_Y0, get_S0, cf_x, cf_y)
+export(cos_price, get_Y0, get_S0, cf_x, cf_y, wf_paths, get_Y_sim, dens_price)
 export(default_y, default_x, default_x_heston, default_x_bates, default_x_BS)
+
