@@ -56,7 +56,7 @@ cos_price <- function(K, T=0.9, par_x, par_y, r=0, div=0,
   sapply(K, oneK)
 }
 
-dens_price <- function(K, T=0.9, par_x, par_y, r=0, div=0,
+opt_price <- function(K, T=0.9, par_x, par_y, r=0, div=0,
                        type=c("call","put"), N=2^12, L=8, h=1e-4) {
   type <- match.arg(type)
   K <- as.numeric(K)
