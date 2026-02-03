@@ -7,7 +7,8 @@
 ```
 
 ## Example
-- Pricing European call options with expiry before- and after event
+
+### Pricing European Call: pre- and post-event expiry
 - Market risk `X`: Bates model (stochastic vol + Merton jumps)
 - Event risk `Y`: stochastic p_t (Beta dist.) + mix of log-normals
 - check parameters (`par_x`, `par_y`) for details
@@ -47,4 +48,14 @@ legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="
 ```
 <img width="800" height="400" alt="iv" src="https://github.com/user-attachments/assets/c65797e4-d447-42d4-9fa3-f933a54c4f00" />
 
+### Simulation of Event-Risk Multiplier
+``` r
+library(event)
 
+par_y <- default_y(par=list(tau=7/365))
+sim <- wf_paths(1e3, par_y$tau, par_y$p0, par_y$sigma_p)
+matplot(sim$paths[,1:10], type="l")
+Yt <- get_Y_sim(sim, par_y, T=8/365)
+matplot(Yt$times, Yt$dotY[,1:50], type="l")
+```
+<img width="800" height="400" alt="Yt" src="https://github.com/user-attachments/assets/3f55961d-8048-4847-8758-a0889e8b3c26" />
