@@ -62,24 +62,25 @@ matplot(Yt$times*365, Yt$dotY, type="l", main="Event-Risk Multiplier", xlab="day
 
 ### C) Impact of `sigma_p`
 
-<img width="800" height="400" alt="sigma_p" src="https://github.com/user-attachments/assets/cf8acb3b-a221-4a5c-ae04-397485e96280" />
+<img width="800" height="400" alt="sigma_p" src="https://github.com/user-attachments/assets/fc448b45-4a8a-4e73-890b-6930daeb1ef9" />
 
 ``` r
 library(event)
 
 par_x <- default_x()
-par_y1 <- par_y2 <- default_y(list(tau=1, sh=0.01, sl=0.01, p0=0.5, n_quad=2^8))
-par_y1$sigma_p <- 1
+par_y1 <- par_y2 <- default_y(list(tau=1, sh=0.1, sl=0.1, p0=0.5, n_quad=2^8))
+par_y1$sigma_p <- 0.6
 par_y2$sigma_p <- 0.001
 
-K <- 70:140
-C1 <- opt_price(K, T=0.9, par_x, par_y1, type="call")
-C2 <- opt_price(K, T=0.9, par_x, par_y2, type="call")
+K <- 80:140
+C1 <- opt_price(K, T=0.95, par_x, par_y1, type="call")
+C2 <- opt_price(K, T=0.95, par_x, par_y2, type="call")
 S0 <- get_S0(par_x, par_y1)
 
 iv1 <- ivol(K, C1, S0, 0.9)
 iv2 <- ivol(K, C2, S0, 0.9)
 plot(log(K/S0), iv1, type="l", ylim=range(c(iv1, iv2)), main="implied vola", ylab="iv"); grid()
 lines(log(K/S0), iv2, col=4)
-legend("topright", legend=c("sigma_p = 1", "sigma_p = 0.001"), lty=1, col=c(1,4), bty="n")
+legend("topright", legend=c(paste0("sigma_p=",par_y1$sigma_p), paste0("sigma_p=",par_y2$sigma_p )), lty=1, col=c(1,4), bty="n")
+
 ```
