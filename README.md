@@ -50,8 +50,6 @@ legend("topright", legend=c("pre-event", "post-event"), lty=1, col=c(1,4), bty="
 <img width="800" height="400" alt="Yt" src="https://github.com/user-attachments/assets/3f55961d-8048-4847-8758-a0889e8b3c26" />
 
 ``` r
-library(event)
-
 par_y <- default_y(par=list(tau=7/365, sigma_p=2))
 sim <- wf_paths(100, par_y$tau, par_y$p0, par_y$sigma_p)
 matplot(sim$paths, type="l")
@@ -65,8 +63,6 @@ matplot(Yt$times*365, Yt$dotY, type="l", main="Event-Risk Multiplier", xlab="day
 <img width="800" height="400" alt="sigma_p" src="https://github.com/user-attachments/assets/fc448b45-4a8a-4e73-890b-6930daeb1ef9" />
 
 ``` r
-library(event)
-
 par_x <- default_x()
 par_y1 <- par_y2 <- default_y(list(tau=1, sh=0.1, sl=0.1, p0=0.5, n_quad=2^8))
 par_y1$sigma_p <- 0.6
@@ -83,4 +79,27 @@ plot(log(K/S0), iv1, type="l", ylim=range(c(iv1, iv2)), main="implied vola", yla
 lines(log(K/S0), iv2, col=4)
 legend("topright", legend=c(paste0("sigma_p=",par_y1$sigma_p), paste0("sigma_p=",par_y2$sigma_p )), lty=1, col=c(1,4), bty="n")
 
+```
+
+### D) Implied Vola directly from Characteristic Function
+
+<img width="800" height="400" alt="ivol_cf" src="https://github.com/user-attachments/assets/49ee29dd-31b1-4cd1-91f3-120ed1942eed" />
+
+Based on: Jacquier & Lorig (2015), "From characteristic functions to implied volatility expansions".
+
+``` r
+par_x <- default_x()
+par_y <- default_y(par=list(tau=7/365, sh=0.01, sl=0.01))
+
+K <- 50:200
+T <- 8/365
+iv <- ivol_from_par(K, T, par_x, par_y)
+plot(log(K), iv, main="implied vola", ylim=c(0.35, 1.2))
+
+# Becnhmark: implied vola from Call price
+C <- opt_price(K, T, par_x, par_y)
+ivc <- ivol(K, C, get_S0(par_x, par_y), T)
+lines(log(K), ivc, col=4, lwd=2)
+
+legend("topright", legend = c("from CF", "from Call price"), pch = c(1, NA), lty = c(NA, 1), bty = "n", col=c(1,4))
 ```
