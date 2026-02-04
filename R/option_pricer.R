@@ -119,5 +119,85 @@ opt_price <- function(K, T=0.9, par_x, par_y, r=0, div=0,
   put
 }
 
-
 bs_price <- function(x, v) pnorm(-x/v+v/2)-exp(x)*pnorm(-x/v-v/2)
+
+
+ivol_from_par <- function(K, T = 0.9, par_x, par_y, r = 0, div = 0,
+                                           type = c("call", "put"), S0 = NULL,
+                                           vol_lower = 1e-10, vol_upper = 5,
+                                           tol = 1e-10, maxiter = 200, ...) {
+  type <- match.arg(type)
+  if (any(!is.finite(K)) || any(K <= 0)) stop("K must be positive")
+  if (!is.finite(T) || T <= 0) stop("T must be > 0")
+  if (!is.finite(r) || !is.finite(div)) stop("r, div must be finite")
+  
+  if (is.null(S0)) {
+    if (exists("get_S0", mode = "function")) S0 <- get_S0(par_x, par_y) else stop("Provide S0 or define get_S0(par_x, par_y).")
+  }
+  
+  disc_r <- exp(-r * T)
+  disc_q <- exp(-div * T)
+  
+  bs_price <- function(S0, K, T, r, q, sig, type) {
+    if (!is.finite(sig) || sig <= 0) {
+      fwd <- S0 * exp((r - q) * T)
+      if (type == "call") return(disc_r * max(fwd - K, 0))
+      return(disc_r * max(K - fwd, 0))
+    }
+    srt <- sqrt(T)
+    vs <- sig * srt
+    d1 <- (log(S0 / K) + (r - q + 0.5 * sig * sig) * T) / vs
+    d2 <- d1 - vs
+    if (type == "call") return(S0 * disc_q * pnorm(d1) - K * disc_r * pnorm(d2))
+    return(K * disc_r * pnorm(-d2) - S0 * disc_q * pnorm(-d1))
+  }
+  
+  no_arb_bounds <- function(S0, K, T, r, q, type) {
+    fwd <- S0 * exp((r - q) * T)
+    if (type == "call") {
+      lb <- exp(-r * T) * max(fwd - K, 0)
+      ub <- S0 * exp(-q * T)
+    } else {
+      lb <- exp(-r * T) * max(K - fwd, 0)
+      ub <- K * exp(-r * T)
+    }
+    c(lb = lb, ub = ub)
+  }
+  
+  iv_one <- function(price, S0, K, T, r, q, type, vol_lower, vol_upper) {
+    b <- no_arb_bounds(S0, K, T, r, q, type)
+    if (!is.finite(price)) return(NA_real_)
+    if (price < b["lb"] - 1e-12 || price > b["ub"] + 1e-12) return(NA_real_)
+    
+    if (abs(price - b["lb"]) <= 1e-12) return(0)
+    
+    f <- function(sig) bs_price(S0, K, T, r, q, sig, type) - price
+    
+    lo <- vol_lower
+    hi <- vol_upper
+    flo <- f(lo)
+    fhi <- f(hi)
+    
+    if (!is.finite(flo) || !is.finite(fhi)) return(NA_real_)
+    
+    if (flo > 0) return(0)
+    
+    if (fhi < 0) {
+      for (j in 1:20) {
+        hi <- hi * 2
+        fhi <- f(hi)
+        if (!is.finite(fhi)) return(NA_real_)
+        if (fhi >= 0) break
+      }
+      if (fhi < 0) return(NA_real_)
+    }
+    
+    uniroot(function(s) f(s), lower = lo, upper = hi, tol = tol, maxiter = maxiter)$root
+  }
+  
+  price_vec <- opt_price(K, T = T, par_x = par_x, par_y = par_y, r = r, div = div, type = type, ...)
+  
+  iv <- vapply(seq_along(K), function(i) iv_one(price_vec[i], S0, K[i], T, r, div, type, vol_lower, vol_upper), numeric(1))
+  
+  iv
+}
